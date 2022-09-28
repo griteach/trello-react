@@ -3,7 +3,7 @@ import {Droppable} from "react-beautiful-dnd";
 import styled from 'styled-components';
 import DragabbleCard from './DragabbleCard';
 import {useForm} from 'react-hook-form';
-import { ITodo, toDoState } from '../atoms';
+import { ITodo, saveDataToLocaleStorage, toDoState } from '../atoms';
 import { useSetRecoilState } from 'recoil';
 
 
@@ -66,6 +66,9 @@ const Form = styled.form`
             color:white;
             text-align: center;
         }
+        &:hover{
+            
+        }
         &:focus{
             
             outline-color: #ffeaa7;
@@ -86,8 +89,16 @@ function Board({toDos, boardId}:IBoardProps){
             text:toDo,
         }
         setToDos(allBoards => {
-            
+            const myTodoData = {
+                ...allBoards,
+                [boardId]:[
+                    newToDo,
+                    ...allBoards[boardId]
+                ]
 
+            };
+            
+            saveDataToLocaleStorage(myTodoData);
             
             return {
                 ...allBoards,

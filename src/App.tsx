@@ -3,7 +3,7 @@
 import { DragDropContext, DropResult }from "react-beautiful-dnd";
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { toDoState } from './atoms';
+import { saveDataToLocaleStorage, toDoState } from './atoms';
 import Board from './components/Board';
 
 
@@ -62,13 +62,19 @@ function App() {
 
         sourceBoard.splice(source.index, 1);
         destinationBoard.splice(destination!.index, 0, taskObj);
-        
-        return {
+
+        const myFinalData = {
           ...allBoards,
           [source.droppableId]:sourceBoard,
           [destination!.droppableId]:destinationBoard,
 
         };
+        saveDataToLocaleStorage(myFinalData);
+
+
+
+
+        return myFinalData;
       })
     }
     
