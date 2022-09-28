@@ -50,10 +50,26 @@ interface IForm{
 
 const Form = styled.form`
     width: 100%;
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     input{
         box-sizing: border-box;
-        width:100%;
+        width: 70%;
+        border: none;
+        border-radius: 5px;
+        padding:4px;
+        background-color: #00cec9;
+        
+        ::placeholder{
+            color:white;
+            text-align: center;
+        }
+        &:focus{
+            
+            outline-color: #ffeaa7;
+        }
     }
 `;
 
@@ -76,8 +92,8 @@ function Board({toDos, boardId}:IBoardProps){
             return {
                 ...allBoards,
                 [boardId]:[
-                    ...allBoards[boardId],
-                    newToDo
+                    newToDo,
+                    ...allBoards[boardId]
                 ]
 
             }
@@ -89,10 +105,11 @@ function Board({toDos, boardId}:IBoardProps){
     return(
     <Wrapper>
         <Title>{boardId}</Title>
+        
         <Form onSubmit={handleSubmit(onValid)} >
             <input {...register("toDo", {
                 required:true,
-            })} type="text" placeholder={`Add task on ${boardId}`} />
+            })} type="text" placeholder={`Write it on ${boardId}`} />
         </Form>
 
         
