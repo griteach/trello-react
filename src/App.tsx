@@ -5,21 +5,32 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { saveDataToLocaleStorage, toDoState } from './atoms';
 import Board from './components/Board';
+import CreateBoard from './components/CreateBoard';
 
 
 
 
-const Wrapper = styled.div`
+const BoardWrapper = styled.div`
   display: flex;
   max-width: 680px;
   width:100%;
   margin:0 auto;
   justify-content: center;
   align-items: center;
-  height:100vh;
+  height:50vh;
   background-color: ${(props) => props.theme.bgColor};
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:100vw;
+  height:100vh;
+  margin:0 auto;
+  
+`;
 
 const Boards = styled.div`
   display: grid;
@@ -63,46 +74,32 @@ function App() {
         sourceBoard.splice(source.index, 1);
         destinationBoard.splice(destination!.index, 0, taskObj);
 
-        const myFinalData = {
+        const toDoData = {
           ...allBoards,
           [source.droppableId]:sourceBoard,
           [destination!.droppableId]:destinationBoard,
 
         };
-        saveDataToLocaleStorage(myFinalData);
+        saveDataToLocaleStorage(toDoData);
 
 
 
 
-        return myFinalData;
+        return toDoData;
       })
     }
     
   };
 
-  //한 번에 처리하기 if 두번안쓰고
-  // const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
-  //   if (!destination) return;
-  //   setToDos((allBoards) => {
-  //   const copyToDos: IToDoState = {};
-  //   Object.keys(allBoards).forEach((toDosKey) => {
-  //   copyToDos[toDosKey] = [...allBoards[toDosKey]];
-  //   });
-  //   copyToDos[source.droppableId].splice(source.index, 1);
-  //   copyToDos[destination.droppableId].splice(
-  //   destination.index,
-  //   0,
-  //   draggableId
-  //   );
-  //   return copyToDos;
-  //   });
-  //   };
- 
-return (<DragDropContext onDragEnd={onDragEnd}>
+return (
+<DragDropContext onDragEnd={onDragEnd}>
   <Wrapper>
-    <Boards>
-      {Object.keys(toDos).map(boardId => <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />)}
-    </Boards>
+    <CreateBoard></CreateBoard>
+    <BoardWrapper>
+      <Boards>
+        {Object.keys(toDos).map(boardId => <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />)}
+      </Boards>
+    </BoardWrapper>
   </Wrapper>
 
 </DragDropContext>);

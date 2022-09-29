@@ -5,6 +5,7 @@ import DragabbleCard from './DragabbleCard';
 import {useForm} from 'react-hook-form';
 import { ITodo, saveDataToLocaleStorage, toDoState } from '../atoms';
 import { useSetRecoilState } from 'recoil';
+import CreateBoard from './CreateBoard';
 
 
 const Wrapper = styled.div`
@@ -98,7 +99,7 @@ function Board({toDos, boardId}:IBoardProps){
 
             };
             
-            saveDataToLocaleStorage(myTodoData);
+            // saveDataToLocaleStorage(myTodoData);
             
             return {
                 ...allBoards,
