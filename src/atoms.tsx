@@ -6,20 +6,25 @@ export interface ITodo{
     text:string;
 }
 
+export interface IBoardId{
+    boardId:string;
+}
+
 interface IToDoState{
     [key:string]:ITodo[];
 }
 
 interface IBoardIdState{
-    boardId:string[];
+    boardId:string;
 }
 
-export const boardIdState = atom<IBoardIdState>({
+export const boardIdState = atom({
     key:"boardId",
-    default: {
-        boardId:[],
-                
-    },
+    default: [
+        "To Do",
+        "doing",
+        "done",
+    ],
 })
 
 //localeStorage 저장하기

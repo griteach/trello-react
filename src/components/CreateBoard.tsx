@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
 import { boardIdState, toDoState } from '../atoms';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 
 
@@ -25,6 +25,9 @@ const Form = styled.form`
     justify-content: center;
     align-items: center;
 
+    button{
+        margin-left:10px;
+    }
     input{
         
         padding:5px 0px;
@@ -60,7 +63,20 @@ function CreateBoard(){
     const setBoardId = useSetRecoilState(boardIdState);
     const {register, setValue, handleSubmit} = useForm<IForm>();
     const onValid = ({boardId}:IForm) => {
+
         
+        setBoardId(prev => {
+
+            const myNewBoardId = [
+                ...prev,
+                boardId,
+            ];
+            console.log(myNewBoardId);
+            return myNewBoardId;
+            
+
+            
+    });
         setValue("boardId", "");
     }
     return (
@@ -70,6 +86,7 @@ function CreateBoard(){
             <input {...register("boardId", {
                 required:true,
             })} type="text" placeholder="Add a board here" />
+            <button type="submit">+</button>
             </Form>
             
         </Wrapper>
