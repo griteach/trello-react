@@ -5,6 +5,7 @@ import { RecoilRoot } from 'recoil';
 import { createGlobalStyle, ThemeProvider, DefaultTheme } from 'styled-components';
 import reset from 'styled-reset';
 import App from './App';
+import SecondApp from './SecondApp';
 import { darkTheme } from './theme';
 
 
@@ -30,7 +31,7 @@ root.render(
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
           <GlobalStyle />
-          <App />
+          <SecondApp />
         </RecoilRoot>
           
         

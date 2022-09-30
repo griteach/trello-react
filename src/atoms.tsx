@@ -14,16 +14,10 @@ interface IToDoState{
     [key:string]:ITodo[];
 }
 
-interface IBoardIdState{
-    boardId:string;
-}
-
 export const boardIdState = atom({
     key:"boardId",
     default: [
         "To Do",
-        "doing",
-        "done",
     ],
 })
 
@@ -44,9 +38,9 @@ export const toDoState = atom<IToDoState>({
     key:"toDo",
     default: {
         //각각 아이디에 맞게 불러올건데, 여기도 사용자가 입력한 리스트의 이름을 불러오기.
-        // "To Do": [],
-        // doing: [],
-        // done: [],
+        "To Do": [],
+        doing: [],
+        done: [],
         
     },
 })

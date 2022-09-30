@@ -40,12 +40,9 @@ const Boards = styled.div`
   
 `
 
-
-const toDos = ["a", "b", "c", "d", "e", "f"]
-
-
 function App() {
   const [toDos, setTodos] = useRecoilState(toDoState);
+  
   //드래그가 끝났을 때 실행되는 함수.
   const onDragEnd = (info:DropResult) => {
     console.log(info);
@@ -70,25 +67,17 @@ function App() {
         const sourceBoard = [...allBoards[source.droppableId]];
         const taskObj = sourceBoard[source.index];
         const destinationBoard = [...allBoards[destination!.droppableId]];
-
         sourceBoard.splice(source.index, 1);
         destinationBoard.splice(destination!.index, 0, taskObj);
-
         const toDoData = {
           ...allBoards,
           [source.droppableId]:sourceBoard,
           [destination!.droppableId]:destinationBoard,
-
         };
         saveDataToLocaleStorage(toDoData);
-
-
-
-
         return toDoData;
       })
     }
-    
   };
 
 return (

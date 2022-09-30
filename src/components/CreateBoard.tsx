@@ -65,8 +65,8 @@ function CreateBoard(){
     const onValid = ({boardId}:IForm) => {
 
         
-        setBoardId(prev => {
-
+        setBoardId((prev) => {
+            
             const myNewBoardId = [
                 ...prev,
                 boardId,
