@@ -12,6 +12,9 @@ import { darkTheme } from './theme';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
+  *{
+    box-sizing: border-box;
+  }
   body{
     color:black;
     background-color: ${(props)=> props.theme.bgColor};
