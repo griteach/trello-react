@@ -2,6 +2,7 @@
 import {DragDropContext, Draggable, Droppable, DropResult} from 'react-beautiful-dnd';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import SecondDraggalbeCard from './components/SecondDraggableCard';
 import { secondToDoState } from './secondAtoms';
 
 
@@ -31,20 +32,22 @@ const Board = styled.div`
     min-height: 100px;
 `;
 
-const Card = styled.div`
-  background-color: ${props => props.theme.cardColor};
-  margin-bottom: 5px;
-`;
 const toDos = ["a","b","c","d","e","f","g","h"];
 
 function SecondApp(){
 
     const [toDos, setTodos] = useRecoilState(secondToDoState);
 
-    const onDragEnd = ({destination, source}:DropResult) => {
-        console.log(destination);
-        console.log(source);
-        
+    const onDragEnd = ({draggableId, destination, source}:DropResult) => {
+        if(!destination) return;
+        setTodos((oldToDos) => {
+            const copyToDos = [...oldToDos];
+
+            copyToDos.splice(source.index, 1);
+            copyToDos.splice(destination?.index, 0, draggableId);
+            return copyToDos;
+        })
+
 
     }
 
@@ -56,15 +59,8 @@ function SecondApp(){
                 <Board ref={magic.innerRef} {...magic.droppableProps}>
                     
                         {toDos.map((toDo, index) => 
-                        <Draggable key={index} draggableId={toDo} index={index}>
-                            {(magic)=>
-                            <Card 
-                                ref={magic.innerRef}
-                                {...magic.draggableProps}
-                                {...magic.dragHandleProps}>
-                                    {toDo}
-                            </Card>}
-                        </Draggable>)}
+                            <SecondDraggalbeCard key={toDo} toDo={toDo} index={index} />
+                        )}
                     {magic.placeholder}
                 </Board>
                 
