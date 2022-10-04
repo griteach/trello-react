@@ -3,15 +3,13 @@ import {Draggable} from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 interface IDraggalbeCardProps {
-    
     toDo:string,
     index:number,
 }
 
-
 const Card = styled.div`
   background-color: ${props => props.theme.cardColor};
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 `;
 
 
