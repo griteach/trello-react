@@ -12,8 +12,5 @@ interface ISecondToDoState {
 
 export const secondToDoState = atom<ISecondToDoState>({
   key: "toDo",
-  default: {
-    Griteach: ["a"],
-    iteach: [],
-  },
+  default: {},
 });

@@ -13,10 +13,32 @@ const Wrapper = styled.div`
   min-height: 100px;
 `;
 
-const Title = styled.h1`
+const TitleWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`;
+
+const Title = styled.span`
   text-align: center;
   color: black;
   padding: 5px;
+`;
+
+const DeleteBtn = styled.span`
+  color: red;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  position: absolute;
+  right: 5px;
+  &:hover {
+    color: black;
+    cursor: pointer;
+    transform: scale(1.2);
+    transition: all 0.5s ease-in-out;
+  }
 `;
 
 const Form = styled.form`
@@ -56,6 +78,25 @@ interface IForm {
 function SecondBoard({ toDos, boardId }: ISecondBoardProps) {
   const setToDos = useSetRecoilState(secondToDoState);
   const { register, setValue, handleSubmit } = useForm<IForm>();
+  const deleteBtnClicked = () => {
+    const myAnswer = window.confirm("이 보드를 정말 삭제하시겠습니까?");
+    if (myAnswer) {
+      console.log("이 보드를 삭제한다고 클릭했을 때");
+      setToDos((oldToDos) => {
+        const newToDos = {
+          ...oldToDos,
+        };
+
+        console.log(boardId, "를 지우려고 합니다.");
+        console.log(newToDos, "삭제 되기 전 버전");
+        console.log(delete newToDos.boardId);
+        delete newToDos.boardId;
+        console.log(newToDos, "삭제된 버전");
+
+        return newToDos;
+      });
+    }
+  };
   const onValid = ({ toDo }: IForm) => {
     setToDos((oldToDos) => {
       //값을 돌려주는데, toDoState는 객체이기 때문에 객체를 돌려주면서
@@ -76,7 +117,10 @@ function SecondBoard({ toDos, boardId }: ISecondBoardProps) {
 
   return (
     <Wrapper>
-      <Title>{boardId}</Title>
+      <TitleWrapper>
+        <Title>{boardId}</Title>
+        <DeleteBtn onClick={deleteBtnClicked}>X</DeleteBtn>
+      </TitleWrapper>
       <Form onSubmit={handleSubmit(onValid)}>
         <input
           {...register("toDo", {
