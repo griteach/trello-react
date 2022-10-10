@@ -31,6 +31,10 @@ const AddBoardButton = styled.div`
   position: absolute;
   bottom: 50px;
   right: 50px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     background-color: blue;
     cursor: pointer;
@@ -111,7 +115,7 @@ function SecondApp() {
             />
           ))}
         </Boards>
-        <AddBoardButton onClick={addBtnClicked} />
+        <AddBoardButton onClick={addBtnClicked}>ADD</AddBoardButton>
       </Wrapper>
     </DragDropContext>
   );
