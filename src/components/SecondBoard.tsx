@@ -79,25 +79,28 @@ function SecondBoard({ toDos, boardId }: ISecondBoardProps) {
   const setToDos = useSetRecoilState(secondToDoState);
   const { register, setValue, handleSubmit } = useForm<IForm>();
   const deleteBtnClicked = () => {
-    setToDos((oldToDos) => {
-      const newToDos = {
-        ...oldToDos,
-      };
+    const answer = window.confirm("이 보드를 삭제하시겠습니까?");
+    if (answer) {
+      setToDos((oldToDos) => {
+        const newToDos = {
+          ...oldToDos,
+        };
 
-      console.log(boardId, "를 지우려고 합니다.");
-      console.log(newToDos, "삭제 되기 전 버전");
-      console.log(boardId in newToDos);
-      console.log(boardId in newToDos);
+        console.log(boardId, "를 지우려고 합니다.");
+        console.log(newToDos, "삭제 되기 전 버전");
 
-      if (delete newToDos.boardId) {
-        console.log(newToDos, "삭제된 버전");
-        console.log("삭제 됐어야함!!!");
-        return newToDos;
-      } else {
-        console.log("노 안됨 삭제 안됨");
-        return oldToDos;
-      }
-    });
+        //삭제할 때 delete obj[key]
+
+        if (delete newToDos[boardId]) {
+          console.log(newToDos, "삭제된 버전");
+          console.log("삭제 됐어야함!!!");
+          return newToDos;
+        } else {
+          console.log("노 안됨 삭제 안됨");
+          return oldToDos;
+        }
+      });
+    }
   };
   const onValid = ({ toDo }: IForm) => {
     setToDos((oldToDos) => {
