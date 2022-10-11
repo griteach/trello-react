@@ -94,6 +94,7 @@ function SecondBoard({ toDos, boardId }: ISecondBoardProps) {
         if (delete newToDos[boardId]) {
           console.log(newToDos, "삭제된 버전");
           console.log("삭제 됐어야함!!!");
+          window.localStorage.setItem("toDo", JSON.stringify(newToDos));
           return newToDos;
         } else {
           console.log("노 안됨 삭제 안됨");
@@ -105,15 +106,16 @@ function SecondBoard({ toDos, boardId }: ISecondBoardProps) {
   const onValid = ({ toDo }: IForm) => {
     setToDos((oldToDos) => {
       //값을 돌려주는데, toDoState는 객체이기 때문에 객체를 돌려주면서
-      return {
-        //기존의 값을 다 넣어주고,
+      //현재의 boardId 키를 갖고 있는 값에 새로운 배열을 만들어 넣어준다.
+      //이 때도, 기존의 boardId키에서 갖고 있던 기존 밸류를 넣어주고, 새롭게 입력받은 값을 추가해준다.
+      //여기서는 입력받은 값이 앞에 들어가도록 세팅했다.
+      const newToDos = {
         ...oldToDos,
-
-        //현재의 boardId 키를 갖고 있는 값에 새로운 배열을 만들어 넣어준다.
-        //이 때도, 기존의 boardId키에서 갖고 있던 기존 밸류를 넣어주고, 새롭게 입력받은 값을 추가해준다.
-        //여기서는 입력받은 값이 앞에 들어가도록 세팅했다.
         [boardId]: [toDo, ...oldToDos[boardId]],
       };
+
+      window.localStorage.setItem("toDo", JSON.stringify(newToDos));
+      return newToDos;
     });
 
     //input toDo 폼의 값을 빈 칸으로 해주기.

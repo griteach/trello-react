@@ -64,6 +64,7 @@ function SecondApp() {
           [source.droppableId]: boardCopy,
           //바꿀 녀석을 다시 넣어주면 아래의 바뀔 녀석은 새롭게 대체될것.
         };
+        window.localStorage.setItem("toDo", JSON.stringify(newBoards));
         return newBoards;
       });
     }
@@ -87,6 +88,7 @@ function SecondApp() {
           [destination.droppableId]: makeNewBoard,
         };
 
+        window.localStorage.setItem("toDo", JSON.stringify(newBoard));
         return newBoard;
       });
     }
@@ -95,10 +97,15 @@ function SecondApp() {
   const addBtnClicked = () => {
     const newBoardName = prompt("보드 이름을 입력해 주세요.") || "";
     setTodos((oldToDos) => {
-      return {
+      const newToDos = {
         ...oldToDos,
         [newBoardName]: [],
       };
+
+      //객체, 배열을 저장할 때는 string으로 변환해야함.
+      window.localStorage.setItem("toDo", JSON.stringify(newToDos));
+
+      return newToDos;
     });
   };
 
