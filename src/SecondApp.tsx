@@ -72,9 +72,9 @@ function SecondApp() {
     if (destination?.droppableId !== source.droppableId) {
       setTodos((oldToDos) => {
         const boardCopy = [...oldToDos[source.droppableId]];
-        boardCopy.splice(source.index, 1);
-
         const makeNewBoard = [...oldToDos[destination.droppableId]];
+
+        boardCopy.splice(source.index, 1);
         makeNewBoard.splice(destination?.index, 0, draggableId);
 
         const newBoard = {
@@ -88,7 +88,6 @@ function SecondApp() {
           [destination.droppableId]: makeNewBoard,
         };
 
-        window.localStorage.setItem("toDo", JSON.stringify(newBoard));
         return newBoard;
       });
     }

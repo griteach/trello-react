@@ -6,11 +6,14 @@ import { secondToDoState } from "../secondAtoms";
 import SecondDraggalbeCard from "./SecondDraggableCard";
 
 const Wrapper = styled.div`
+  width: 300px;
   background-color: ${(props) => props.theme.boardColor};
 
-  padding: 20px;
+  padding: 10px;
   border-radius: 15px;
   min-height: 100px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const TitleWrapper = styled.div`
@@ -24,6 +27,23 @@ const Title = styled.span`
   text-align: center;
   color: black;
   padding: 5px;
+`;
+
+interface IAreaProps {
+  draggingFromThis: boolean;
+  isDraggingOver: boolean;
+}
+
+const Area = styled.div<IAreaProps>`
+  padding: 20px;
+  background-color: ${(props) =>
+    props.isDraggingOver
+      ? "#dfe6e9"
+      : props.draggingFromThis
+      ? "#b2bec3"
+      : "transparent"};
+  flex-grow: 1;
+  transition: background-color 0.3s ease-in-out;
 `;
 
 const DeleteBtn = styled.span`
@@ -138,13 +158,18 @@ function SecondBoard({ toDos, boardId }: ISecondBoardProps) {
         />
       </Form>
       <Droppable droppableId={boardId}>
-        {(magic) => (
-          <div ref={magic.innerRef} {...magic.droppableProps}>
+        {(magic, snapshot) => (
+          <Area
+            isDraggingOver={snapshot.isDraggingOver}
+            draggingFromThis={Boolean(snapshot.draggingFromThisWith)}
+            ref={magic.innerRef}
+            {...magic.droppableProps}
+          >
             {toDos.map((toDo, index) => (
               <SecondDraggalbeCard key={toDo} toDo={toDo} index={index} />
             ))}
             {magic.placeholder}
-          </div>
+          </Area>
         )}
       </Droppable>
     </Wrapper>

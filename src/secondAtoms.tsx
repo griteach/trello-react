@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-export const TRELLO_TODO = "TRELLO_TODO";
+export const TRELLO_TODO = "toDo";
 
 const localStorageTodo: string = localStorage.getItem(TRELLO_TODO) || "{}";
 
